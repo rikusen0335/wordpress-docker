@@ -27,6 +27,15 @@ services:
     depends_on:
       - mysql
 
+  # wp-cli
+  cli:
+    image: wordpress:cli
+    volumes:
+      - ./wordpress:/var/www/html
+    depends_on:
+      - mysql
+      - wordpress
+
   # Nginxサービス
   nginx:
     image: nginx:stable
@@ -37,5 +46,6 @@ services:
       - ./config/nginx/conf.d:/etc/nginx/conf.d
       - ./config/nginx/log:/var/log/nginx
       - ./wordpress:/var/www/html
+      - ./theme:/var/www/html/wp-content/themes/theme
     depends_on:
       - wordpress
